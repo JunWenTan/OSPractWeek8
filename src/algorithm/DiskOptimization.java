@@ -3,6 +3,7 @@ package algorithm;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Properties;
 
 /**
@@ -118,14 +119,42 @@ public class DiskOptimization {
     public int[] arrangeBySCAN(int current, int sequence[])
     {
         int n = sequence.length;
-        int scan[] = new int[n];
+        int scan[] = new int[n+1];
         int nearEnd = getNearestEnd(current);
+        int counter = 0;
+
+        int tempList[] = new int[n];
+        for(int i = 0; i <n; i++)
+        {
+            tempList[i] = sequence[i];
+        }
+        Arrays.sort(tempList);
 
         int temp = current;
         if(nearEnd > current)
         {
+            for(int i = 0; i < n; i++)
+            {
+                if (tempList[i] > temp) {
+                    scan[counter] = tempList[i];
+                    temp = tempList[i];
+                    counter++;
+                }
+            }
+            scan[counter] = nearEnd;
+            counter++;
+            temp = current;
+            for(int i = n-1; i >= 0; i--)
+            {
+                if(tempList[i] < temp)
+                {
+                    scan[counter] = tempList[i];
+                    temp = tempList[i];
+                    counter++;
+                }
+            }
 
-        }
+        }else
     }
 
     public int getNearestEnd(int current)
@@ -133,22 +162,7 @@ public class DiskOptimization {
         return (dp.getCylinders() - current) < current ? dp.getCylinders() : 0;
     }
 
-    public int[] arrangeInAscendingOrder(int[] sequence)
-    {
-        int temp[] = new int[sequence.length];
-        for(int n : sequence)
-        {
 
-        }
-    }
 
-    public int getSmallest(int[] sequence, int i)
-    {
-        int smallest = sequence[0];
-        for(int n: sequence)
-        {
-            smallest = n < smallest ? n : smallest;
-        }
-        return smallest;
-    }
+
 }
